@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
   }
 }
 
+//1枚目のページ
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -23,6 +24,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("ビストロ・レアゾン")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NextPage()),
+            );
+          },
+          child: const Text('リスト追加'),
+        ),
+      ),
+    );
+  }
+}
+
+class NextPage extends StatefulWidget {
+  const NextPage({super.key});
+
+  @override
+  State<NextPage> createState() => _NextPageState();
+}
+
+class _NextPageState extends State<NextPage> {
   String _userAccelerometerValues = "";
   String _gyroscopeValues = "";
 
