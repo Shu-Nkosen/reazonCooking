@@ -14,7 +14,6 @@ class _NextPageState extends State<NextPage> {
   int _userCutCount = 0;
   int _userCutState = 1;
   String _userAccelerometerValues = "";
-  String _gyroscopeValues = "";
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,6 @@ class _NextPageState extends State<NextPage> {
             _userAccelerometerValues,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
 
         Center(
           child:ElevatedButton(
@@ -57,11 +55,6 @@ class _NextPageState extends State<NextPage> {
           _userCutCount += 1;
         }
         _userCutState *= -1;
-      });
-    });
-    gyroscopeEvents.listen((GyroscopeEvent event) {
-      setState(() {
-        _gyroscopeValues = "ジャイロセンサー\n${event.x}\n${event.y}\n${event.z}";
       });
     });
   }
