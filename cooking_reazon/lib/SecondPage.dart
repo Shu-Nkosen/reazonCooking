@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:async';
+import 'ThirdPage.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -25,6 +26,18 @@ class _NextPageState extends State<NextPage> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
+
+        Center(
+          child:ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ThirdPage()),
+            );
+          },
+          child: const Text('3枚目へ'),
+        ),
+        ),
         ],
       ),
     );
