@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("ビストロ・レアゾン")),
+      appBar: AppBar(title: Text("ビストロ・レアゾン",style:TextStyle(fontStyle:FontStyle.italic))),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
               MaterialPageRoute(builder: (context) => const NextPage()),
             );
           },
-          child: const Text('リスト追加'),
+          child: const Text('Start!',style:TextStyle(fontSize:100,color:Colors.red)),
         ),
       ),
     );
