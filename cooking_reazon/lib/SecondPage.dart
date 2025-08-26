@@ -11,8 +11,9 @@ class NextPage extends StatefulWidget {
 }
 
 class _NextPageState extends State<NextPage> {
+  int _userCutCount = 0;
+  int _userCutState = 1;
   String _userAccelerometerValues = "";
-  String _gyroscopeValues = "";
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +22,11 @@ class _NextPageState extends State<NextPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          Text(_userCutCount.toString()),
           Text(
             _userAccelerometerValues,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
 
         Center(
           child:ElevatedButton(
@@ -50,11 +51,10 @@ class _NextPageState extends State<NextPage> {
       setState(() {
         _userAccelerometerValues =
             "加速度センサー\n${event.x}\n${event.y}\n${event.z}";
-      });
-    });
-    gyroscopeEvents.listen((GyroscopeEvent event) {
-      setState(() {
-        _gyroscopeValues = "ジャイロセンサー\n${event.x}\n${event.y}\n${event.z}";
+        if (event.x * _userCutState < -10) {
+          _userCutCount += 1;
+        }
+        _userCutState *= -1;
       });
     });
   }
