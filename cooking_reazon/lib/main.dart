@@ -29,7 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("ビストロ・レアゾン",style:TextStyle(fontStyle:FontStyle.italic))),
+      backgroundColor: const Color.fromARGB(255, 255, 153, 0),
+      appBar: AppBar(title: Text("ビストロ・レアゾン",style:TextStyle(fontStyle:FontStyle.italic)),backgroundColor:Color.fromARGB(255, 237, 247, 255)),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
