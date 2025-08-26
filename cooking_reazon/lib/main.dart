@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Todo App', home: MyHomePage());
+    return MaterialApp(title: 'Bistro Reazon', home: MyHomePage());
   }
 }
 
@@ -29,8 +29,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("ビストロ・レアゾン")),
-      body: Center(
+      backgroundColor: const Color.fromARGB(255, 255, 153, 0),
+      appBar: AppBar(title: Text("ビストロ・レアゾン",style:TextStyle(fontStyle:FontStyle.italic)),backgroundColor:Color.fromARGB(255, 237, 247, 255)),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+          image: AssetImage('images/back.png'),
+          fit: BoxFit.cover,
+          //alignment: Alignment.topRight,
+          )
+        ),
+
+      child:Center(
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -38,8 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
               MaterialPageRoute(builder: (context) => const NextPage()),
             );
           },
-          child: const Text('リスト追加'),
+          child: const Text('Start!',style:TextStyle(fontSize:100,color:Colors.red)),
         ),
+      ),
       ),
     );
   }
