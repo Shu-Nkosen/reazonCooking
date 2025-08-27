@@ -14,6 +14,9 @@ class NextPage extends StatefulWidget {
 class _NextPageState extends State<NextPage> {
   int _userCutCount = 0;
   int _userCutState = 1;
+  int _currentVegetable = 1;
+  List<int> curryVegetables = [];
+  Map<int, String> vegetableImages = {1: 'C', 2: 'P', 3: 'O', 4: 'M'};
 
   OverlayEntry? _overlayEntry;
 
@@ -28,27 +31,69 @@ class _NextPageState extends State<NextPage> {
         children: <Widget>[
           Text("振ってカット！！", style: Theme.of(context).textTheme.titleLarge),
           if (_userCutCount < 30)
-            Image.asset('images/${((_userCutCount / 5) + 1).toInt()}C.png'),
+            Image.asset(
+              'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
+            ),
           Text(
             "${_userCutCount.toString()}回！",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-
-          // Text(
-          //   _userAccelerometerValues,
-          //   style: Theme.of(context).textTheme.titleLarge,
-          // ),
           Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ThirdPage()),
-                );
-              },
-              child: Column(children: [const Text('3枚目へ')]),
-            ),
+            child: _currentVegetable == 4
+                ? SizedBox(
+                    width: 250, // ボタンの幅を指定
+                    height: 80,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          curryVegetables.add(_userCutCount);
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ThirdPage(
+                              // ここでcurryVegetablesリストを渡す
+                              curryVegetables: curryVegetables,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Center(
+                        child: const Text(
+                          '煮る！',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Color.fromARGB(255, 75, 196, 91),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    width: 250, // ボタンの幅を指定
+                    height: 80,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          curryVegetables.add(_userCutCount);
+                          _currentVegetable += 1;
+                          _userCutCount = 0;
+                        });
+                        _showKnifeOverlay();
+                      },
+                      child: Center(
+                        child: const Text(
+                          '次の野菜へ！',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Color.fromARGB(255, 75, 196, 91),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
           ),
+
           ElevatedButton(
             onPressed: _playCutSound, // ボタンを押したら音声再生メソッドを呼び出す
             style: ElevatedButton.styleFrom(
