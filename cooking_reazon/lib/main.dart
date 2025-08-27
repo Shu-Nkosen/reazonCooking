@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'SecondPage.dart';
 
-
 void main() {
   runApp(MainApp());
 }
@@ -28,27 +27,34 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 153, 0),
-      appBar: AppBar(title: Text("ビストロ・レアゾン",style:TextStyle(fontStyle:FontStyle.italic)),backgroundColor:Color.fromARGB(255, 237, 247, 255)),
+      appBar: AppBar(
+        title: Text("ビストロ・レアゾン", style: TextStyle(fontStyle: FontStyle.italic)),
+        backgroundColor: Color.fromARGB(255, 237, 247, 255),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
+
           image: AssetImage('images/back2.png'),
           fit: BoxFit.cover,
           alignment: Alignment(1.0, 1.0),
           )
         ),
 
-      child:Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NextPage()),
-            );
-          },
-          child: const Text('Start!',style:TextStyle(fontSize:100,color:Colors.red)),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NextPage()),
+              );
+            },
+            child: const Text(
+              'Start!',
+              style: TextStyle(fontSize: 100, color: Colors.red),
+            ),
+          ),
         ),
-      ),
       ),
     );
   }

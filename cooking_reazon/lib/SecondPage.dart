@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'ThirdPage.dart';
 import 'dart:math' as math;
+import 'package:audioplayers/audioplayers.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -16,6 +17,8 @@ class _NextPageState extends State<NextPage> {
   String _userAccelerometerValues = "";
 
   OverlayEntry? _overlayEntry;
+
+  late AudioPlayer _audioPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,13 @@ class _NextPageState extends State<NextPage> {
               child: Column(children: [const Text('3枚目へ')]),
             ),
           ),
+          ElevatedButton(
+            onPressed: _playCutSound, // ボタンを押したら音声再生メソッドを呼び出す
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange, // ボタンの色をオレンジに
+            ),
+            child: const Text('【デバッグ用】音声再生テスト'),
+          ),
         ],
       ),
     );
@@ -54,6 +64,9 @@ class _NextPageState extends State<NextPage> {
   @override
   void initState() {
     super.initState();
+
+    _audioPlayer = AudioPlayer();
+
     // This callback runs after the initial frame is built, avoiding the error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showKnifeOverlay();
@@ -65,10 +78,19 @@ class _NextPageState extends State<NextPage> {
             "加速度センサー\n${event.x}\n${event.y}\n${event.z}";
         if (event.x * _userCutState < -10) {
           _userCutCount += 1;
+          _playCutSound();
         }
         _userCutState *= -1;
       });
     });
+  }
+
+  void _playCutSound() async {
+    try {
+      await _audioPlayer.play(AssetSource('sounds/cut.mp3'));
+    } catch (e) {
+      print('Error playing sound: $e');
+    }
   }
 
   void _showKnifeOverlay() {
@@ -91,6 +113,7 @@ class _NextPageState extends State<NextPage> {
   @override
   void dispose() {
     _overlayEntry?.remove();
+    _audioPlayer.dispose();
     super.dispose();
   }
 }
