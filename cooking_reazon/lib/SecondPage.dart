@@ -3,6 +3,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:async';
 import 'ThirdPage.dart';
 import 'dart:math' as math;
+import 'package:audioplayers/audioplayers.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
