@@ -32,9 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-          image: AssetImage('images/back.png'),
+          image: AssetImage('images/back2.png'),
           fit: BoxFit.cover,
-          //alignment: Alignment.topRight,
+          alignment: Alignment(1.0, 1.0),
           )
         ),
 
