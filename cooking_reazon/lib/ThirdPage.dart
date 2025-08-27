@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'dart:async';
 
 class ThirdPage extends StatefulWidget {
   const ThirdPage({super.key});
