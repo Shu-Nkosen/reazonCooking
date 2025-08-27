@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   sensors_plus: ^6.1.2
+  audioplayers: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +21,4 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - assets/audio/

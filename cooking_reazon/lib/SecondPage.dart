@@ -3,6 +3,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:async';
 import 'ThirdPage.dart';
 import 'dart:math' as math;
+import 'package:audioplayers/audioplayers.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -54,6 +55,7 @@ class _NextPageState extends State<NextPage> {
 
   @override
   void initState() {
+    
     super.initState();
     // This callback runs after the initial frame is built, avoiding the error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -66,6 +68,10 @@ class _NextPageState extends State<NextPage> {
             "加速度センサー\n${event.x}\n${event.y}\n${event.z}";
         if (event.x * _userCutState < -10) {
           _userCutCount += 1;
+              final player = AudioPlayer();
+                player.play(
+                  AssetSource('audio/cut.mp3'),
+                );
         }
         _userCutState *= -1;
       });
