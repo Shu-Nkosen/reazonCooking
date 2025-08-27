@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'dart:async';
 import 'SecondPage.dart';
 
 void main() {
@@ -36,10 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/back.png'),
-            fit: BoxFit.cover,
-            //alignment: Alignment.topRight,
-          ),
+
+          image: AssetImage('images/back2.png'),
+          fit: BoxFit.cover,
+          alignment: Alignment(1.0, 1.0),
+          )
         ),
 
         child: Center(
