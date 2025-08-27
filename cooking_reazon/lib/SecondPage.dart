@@ -3,7 +3,6 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:async';
 import 'ThirdPage.dart';
 import 'dart:math' as math;
-import 'package:audioplayers/audioplayers.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -65,10 +64,6 @@ class _NextPageState extends State<NextPage> {
       setState(() {
         if (event.x * _userCutState < -10) {
           _userCutCount += 1;
-              final player = AudioPlayer();
-                player.play(
-                  AssetSource('audio/cut.mp3'),
-                );
         }
         _userCutState *= -1;
       });
