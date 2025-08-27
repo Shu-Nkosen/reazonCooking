@@ -15,7 +15,6 @@ class NextPage extends StatefulWidget {
 class _NextPageState extends State<NextPage> {
   int _userCutCount = 0;
   int _userCutState = 1;
-  String _userAccelerometerValues = "";
 
   OverlayEntry? _overlayEntry;
 
@@ -27,7 +26,8 @@ class _NextPageState extends State<NextPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Text("振ってカット！！", style: Theme.of(context).textTheme.titleLarge),
-          Image.asset('images/1C.png'),
+          if (_userCutCount < 30)
+            Image.asset('images/${((_userCutCount / 5) + 1).toInt()}C.png'),
           Text(
             "${_userCutCount.toString()}回！",
             style: Theme.of(context).textTheme.titleLarge,
@@ -55,7 +55,6 @@ class _NextPageState extends State<NextPage> {
 
   @override
   void initState() {
-    
     super.initState();
     // This callback runs after the initial frame is built, avoiding the error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,8 +63,6 @@ class _NextPageState extends State<NextPage> {
 
     userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       setState(() {
-        _userAccelerometerValues =
-            "加速度センサー\n${event.x}\n${event.y}\n${event.z}";
         if (event.x * _userCutState < -10) {
           _userCutCount += 1;
               final player = AudioPlayer();
