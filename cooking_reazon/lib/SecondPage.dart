@@ -66,7 +66,7 @@ class _NextPageState extends State<NextPage> {
     super.initState();
 
     _audioPlayer = AudioPlayer();
-
+    _audioPlayer.setPlayerMode(PlayerMode.lowLatency);
     // This callback runs after the initial frame is built, avoiding the error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showKnifeOverlay();
