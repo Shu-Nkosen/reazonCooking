@@ -29,13 +29,13 @@ class _ThirdPageState extends State<ThirdPage> {
           //     onPressed: toresult(),
           // ),
 
-      if (_result)
-      // 半透明の暗幕
-      ModalBarrier(
-        // ignore: deprecated_member_use
-        color: Colors.black.withOpacity(0.5), // 黒色で透明度50%
-        dismissible: false, // タップで閉じないようにする
-      ),
+      // if (_result)
+      // // 半透明の暗幕
+      // ModalBarrier(
+      //   // ignore: deprecated_member_use
+      //   color: Colors.black.withOpacity(0.5), // 黒色で透明度50%
+      //   dismissible: false, // タップで閉じないようにする
+      // ),
     // 3. リザルト画面
       // if (_result)
       // Center(
@@ -47,9 +47,9 @@ class _ThirdPageState extends State<ThirdPage> {
   }
 
   void toresult(){
-    setState(){
+    setState((){
       _result=true;
-    }
+    });
   }
 
 }
