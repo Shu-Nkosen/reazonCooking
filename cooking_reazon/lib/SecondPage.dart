@@ -98,12 +98,33 @@ class _NextPageState extends State<NextPage> {
                             ),
                           );
                         },
-                        child: Center(
-                          child: const Text(
-                            '煮る！',
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Color.fromARGB(255, 75, 196, 91),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: <Color>[
+                                Colors.orange[300]!,
+                                Colors.orange[500]!,
+                                Colors.orange[700]!,
+                              ],
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text(
+                              '煮る！',
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -116,18 +137,40 @@ class _NextPageState extends State<NextPage> {
                         onPressed: () {
                           _handleNextVegetable(); // 共通のメソッドを呼び出す
                         },
-                        child: Center(
-                          child: const Text(
-                            '次の野菜へ！',
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Color.fromARGB(255, 75, 196, 91),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: <Color>[
+                                Colors.orange[300]!,
+                                Colors.orange[500]!,
+                                Colors.orange[700]!,
+                              ],
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const Text(
+                              '次の野菜へ！',
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
             ),
+
             // 戻るボタン
             SizedBox(
               width: 250, // ボタンの幅を指定
@@ -139,24 +182,32 @@ class _NextPageState extends State<NextPage> {
                   _overlayEntry = null;
                   Navigator.pop(context);
                 },
-                child: Center(
-                  child: const Text(
-                    'ホームに戻る',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Color.fromARGB(255, 75, 196, 91),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Colors.orange[300]!,
+                        Colors.orange[500]!,
+                        Colors.orange[700]!,
+                      ],
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'ホームに戻る',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
                   ),
                 ),
               ),
-            ),
-
-            ElevatedButton(
-              onPressed: _playCutSound, // ボタンを押したら音声再生メソッドを呼び出す
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange, // ボタンの色をオレンジに
-              ),
-              child: const Text('【デバッグ用】音声再生テスト'),
             ),
           ],
         ),
