@@ -53,7 +53,7 @@ class _NextPageState extends State<NextPage> {
                           MaterialPageRoute(
                             builder: (context) => ThirdPage(
                               // ここでcurryVegetablesリストを渡す
-                              curryVegetables: curryVegetables,
+                              curryVegetables: [5,5,5,5],
                             ),
                           ),
                         );
