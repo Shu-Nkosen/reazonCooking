@@ -62,7 +62,7 @@ class _NextPageState extends State<NextPage> {
               ),
             ),
             Center(
-              child: _currentVegetable == 4
+              child: _currentVegetable == 3
                   ? SizedBox(
                       width: 250, // ボタンの幅を指定
                       height: 80,
@@ -104,7 +104,7 @@ class _NextPageState extends State<NextPage> {
                           _overlayEntry?.remove();
                           _overlayEntry = null;
                           setState(() {
-                            curryVegetables.add(_userCutCount);
+                            curryVegetables[_currentVegetable] = _userCutCount;
                             _currentVegetable += 1;
                             _userCutCount = 0;
                           });
@@ -159,7 +159,7 @@ class _NextPageState extends State<NextPage> {
   @override
   void initState() {
     super.initState();
-    
+
     _audioPlayer = AudioPlayer();
     _audioPlayer.setPlayerMode(PlayerMode.lowLatency);
     WidgetsBinding.instance.addPostFrameCallback((_) {
