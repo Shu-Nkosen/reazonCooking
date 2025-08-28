@@ -25,7 +25,8 @@ class _NextPageState extends State<NextPage> {
 
   OverlayEntry? _overlayEntry;
 
-  late AudioPlayer _audioPlayer;
+  late AudioPlayer _cutSoundPlayer;
+  late AudioPlayer _bgmPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,8 @@ class _NextPageState extends State<NextPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
+                          _bgmPlayer.stop();
+
                           setState(() {
                             curryVegetables[_currentVegetable] = _userCutCount;
                           });
@@ -124,6 +127,7 @@ class _NextPageState extends State<NextPage> {
               height: 80,
               child: ElevatedButton(
                 onPressed: () {
+                  _bgmPlayer.stop();
                   _overlayEntry?.remove();
                   _overlayEntry = null;
                   Navigator.pop(context);
@@ -157,8 +161,14 @@ class _NextPageState extends State<NextPage> {
   void initState() {
     super.initState();
 
-    _audioPlayer = AudioPlayer();
-    _audioPlayer.setPlayerMode(PlayerMode.lowLatency);
+    _cutSoundPlayer = AudioPlayer();
+    _cutSoundPlayer.setPlayerMode(PlayerMode.lowLatency);
+
+    _bgmPlayer = AudioPlayer();
+    _bgmPlayer.setReleaseMode(ReleaseMode.loop);
+    _bgmPlayer.setVolume(0.5);
+    _bgmPlayer.play(AssetSource('sounds/cookbgm.mp3'));
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showKnifeOverlay();
     });
@@ -181,7 +191,7 @@ class _NextPageState extends State<NextPage> {
 
   void _playCutSound() async {
     try {
-      await _audioPlayer.play(AssetSource('sounds/cut.mp3'));
+      await _cutSoundPlayer.play(AssetSource('sounds/cut.mp3'));
     } catch (e) {
       print('Error playing sound: $e');
     }
@@ -207,7 +217,8 @@ class _NextPageState extends State<NextPage> {
     _accelerometerSubscription?.cancel();
     _overlayEntry?.remove();
     _overlayEntry = null;
-    _audioPlayer.dispose();
+    _cutSoundPlayer.dispose();
+    _bgmPlayer.dispose();
     super.dispose();
   }
 }

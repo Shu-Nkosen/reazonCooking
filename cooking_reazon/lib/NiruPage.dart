@@ -48,7 +48,7 @@ class _NiruPageState extends State<NiruPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[800],
+      backgroundColor: Colors.deepOrange,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
