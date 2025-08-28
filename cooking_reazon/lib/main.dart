@@ -2,17 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'SecondPage.dart';
+import 'ThirdPage.dart';
 
 void main() {
   runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key});
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Bistro Reazon', home: MyHomePage());
+    return MaterialApp(
+      title: 'Bistro Reazon',
+      initialRoute: '/', // アプリ起動時の最初のルート
+      routes: {
+        '/': (context) => const MyHomePage(),
+        '/second': (context) => const NextPage(),
+        '/third': (context) => const ThirdPage(curryVegetables: []),
+      },
+    );
   }
 }
 
@@ -29,17 +38,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ビストロ・レアゾン", style: TextStyle(fontStyle: FontStyle.italic, color: Color.fromARGB(255, 0, 0, 0))),
+        title: Text(
+          "ビストロ・レアゾン",
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 0, 0, 0),
+          ),
+        ),
         backgroundColor: Color.fromARGB(255, 245, 211, 90),
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-
-          image: AssetImage('images/back2.png'),
-          fit: BoxFit.cover,
-          alignment: Alignment(1.0, 1.0),
-          )
+            image: AssetImage('images/back2.png'),
+            fit: BoxFit.cover,
+            alignment: Alignment(1.0, 1.0),
+          ),
         ),
 
         child: Center(
