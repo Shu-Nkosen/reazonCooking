@@ -41,7 +41,6 @@ class _NiruPageState extends State<NiruPage> {
 
   @override
   void dispose() {
-    // 5. ページが不要になったら、プレイヤーのリソースを解放（重要！）
     _audioPlayer.dispose();
     super.dispose();
   }
