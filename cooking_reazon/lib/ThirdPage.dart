@@ -132,12 +132,12 @@ void _fifteenScore() {
     }
     else if(reI[0]+reI[1]+reI[2]+reI[3]==2){
       setState((){
-        ojiCo="ダイナミックとミニマムが混ざり合っておる!まるで複合住宅じゃ!!";
+        ojiCo="ダイナミックとミニマムが混ざり合っておる!";
       });
     }
     else if(reI[0]==1){
       setState((){
-        ojiCo="じゃがいもがそのままじゃ！丸呑みできるかのう…";
+        ojiCo="じゃがいもがそのままじゃ！主張が強いのう…";
       });
     }
     else if(reI[1]==1){
@@ -147,7 +147,7 @@ void _fifteenScore() {
     }
     else if(reI[2]==1){
       setState((){
-        ojiCo="玉ねぎがそのままじゃ！涙が出るのが嫌だったのかのう…";
+        ojiCo="玉ねぎがそのままじゃ！主張が強いのう…";
       });
     }
     else if(reI[3]==1){
@@ -200,7 +200,7 @@ void _fifteenScore() {
             ),
             SpeechBalloon(
               nipLocation: NipLocation.left,
-              borderColor: Colors.green,
+              borderColor: Color.fromARGB(255, 86, 20, 40),
               height: 70, // マルなので同じheightとwidth
               width: 300,
               borderRadius: 40,
@@ -210,7 +210,7 @@ void _fifteenScore() {
                 children: [
                   Text(
                     '$ojiCo',
-                    style: TextStyle(color: Colors.green,fontSize:15),
+                    style: TextStyle(color: Color.fromARGB(255, 86, 20, 40),fontSize:18),
                   ),
                 ],
               ),
