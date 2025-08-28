@@ -14,21 +14,34 @@ class _ThirdPageState extends State<ThirdPage> {
   String _userAccelerometerValues = "";
   String _gyroscopeValues = "";
   late int totalScore;
-  late final List<int> resultVegetables; // Declare the new variable
+  late final List<int> resultVegetables;
+  late final List<int> reI;
 
     @override
   void initState() {
     super.initState();   
     resultVegetables = widget.curryVegetables.map((int value) => (value ~/ 5) ).toList();
     for (int i = 0; i < resultVegetables.length; i++) {
-      if(resultVegetables[i]!=0 || resultVegetables[i]<=5){
+      if(resultVegetables[i]!=0 && resultVegetables[i]<=5){
       resultVegetables[i] = resultVegetables[i] + 1;
       }
       if(resultVegetables[i]>5){
         resultVegetables[i]=6;
       }
     }
+    _fifteenScore();
     totalScore = _calculateScore();
+  }
+
+void _fifteenScore() {
+    reI = []; // リストを初期化
+    for (int value in widget.curryVegetables) {
+      if (value - 15 >= 0) {
+        reI.add(0);
+      } else {
+        reI.add(1);
+      }
+    }
   }
 
   int _calculateScore() {
@@ -97,7 +110,16 @@ class _ThirdPageState extends State<ThirdPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Flutter Demo Home Page")),
+      appBar: AppBar(
+        title: Text(
+          "ビストロ・レアゾン",
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 251, 250, 250),
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 86, 20, 40),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -109,6 +131,26 @@ class _ThirdPageState extends State<ThirdPage> {
             'Total Score: $totalScore', // Display the total score here
             style: Theme.of(context).textTheme.headlineMedium,
           ),
+          if (totalScore == 100)
+          Image.asset(
+            'images/curry100.png',
+            width: 500, // 画像の幅を調整
+            height: 500, // 画像の高さを調整
+          )
+          else if (totalScore == 0)
+          Image.asset(
+            'images/curry0.png',
+            width: 500, // 画像の幅を調整
+            height: 500, // 画像の高さを調整
+          )
+          else
+            Image.asset(
+            'images/curry${reI[0]}${reI[1]}${reI[2]}${reI[3]}.png',
+            width: 500, // 画像の幅を調整
+            height: 500, // 画像の高さを調整
+            ),
+          
+        
           Text(
             _userAccelerometerValues,
             style: Theme.of(context).textTheme.titleLarge,
