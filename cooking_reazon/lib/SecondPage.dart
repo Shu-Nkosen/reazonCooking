@@ -20,6 +20,7 @@ class _NextPageState extends State<NextPage> {
   StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
   late Timer _timer;
   late Timer _countdownTimer; // 1秒ごとに更新するタイマーを追加
+  final int cookTime = 20;
   int _userCutCount = 0;
   int _userCutState = 1;
   int _currentVegetable = 0;
@@ -30,7 +31,7 @@ class _NextPageState extends State<NextPage> {
 
   late AudioPlayer _audioPlayer;
 
-  int _remainingSeconds = 20; // 残り秒数を保持する状態変数を追加
+  late int _remainingSeconds = cookTime;
 
   @override
   Widget build(BuildContext context) {
@@ -196,25 +197,44 @@ class _NextPageState extends State<NextPage> {
     if (_timer.isActive) _timer.cancel();
     if (_countdownTimer.isActive) _countdownTimer.cancel();
 
-    _remainingSeconds = 20; // 秒数をリセット
+    // setStateで秒数をリセットし、UIを即座に更新する
+    setState(() {
+      _remainingSeconds = cookTime;
+    });
 
-    if (this.mounted && _currentVegetable < 3) {
-      // 20秒後に実行するタイマー
-      _timer = Timer(const Duration(seconds: 20), () {
+    if (this.mounted && _currentVegetable <= 3) {
+      _timer = Timer(Duration(seconds: cookTime), () {
         _handleNextVegetable();
       });
 
       // 1秒ごとにカウントダウンを更新するタイマー
-      _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      _countdownTimer = Timer.periodic(const Duration(seconds: 1), (
+        timer,
+      ) async {
         if (_remainingSeconds > 0) {
           setState(() {
             _remainingSeconds--;
           });
-          // 0秒になったときにバイブレーションをトリガー
-          if (_remainingSeconds == 0) {
-             if (await Vibration.hasVibrator()) { // バイブレーション機能の有無をチェック
-                Vibration.vibrate(duration: 500); // 500msのバイブレーションを実行
-             }
+          // 1秒になったときにバイブレーションをトリガー
+          if (_remainingSeconds == 1) {
+            if (await Vibration.hasVibrator()) {
+              Vibration.vibrate(duration: 500);
+            }
+            Future.delayed(const Duration(seconds: 1), () {
+              if (_currentVegetable == 3) {
+                _overlayEntry?.remove();
+                _overlayEntry = null;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NiruPage(
+                      // ここでcurryVegetablesリストを渡す
+                      curryVegetables: curryVegetables,
+                    ),
+                  ),
+                );
+              }
+            });
           }
         } else {
           timer.cancel();
@@ -224,7 +244,7 @@ class _NextPageState extends State<NextPage> {
   }
 
   void _handleNextVegetable() {
-    if (_currentVegetable >= 3) { // 最後の野菜の場合は何もしない
+    if (_currentVegetable >= 3) {
       _timer.cancel();
       _countdownTimer.cancel();
       return;
