@@ -1,30 +1,34 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'ThirdPage.dart';
 
-class AnimationPage extends StatefulWidget {
+class NiruPage extends StatefulWidget {
   final List<int> curryVegetables;
 
-  const AnimationPage({super.key, required this.curryVegetables});
+  const NiruPage({super.key, required this.curryVegetables});
 
   @override
-  State<AnimationPage> createState() => _AnimationPageState();
+  State<NiruPage> createState() => _NiruPageState();
 }
 
-class _AnimationPageState extends State<AnimationPage> {
+class _NiruPageState extends State<NiruPage> {
   bool _isBoiling = false;
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
-
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.play(AssetSource('sounds/nikomi.mp3'));
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _isBoiling = true;
       });
     });
 
-    Timer(const Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 8), () {
+      _audioPlayer.stop();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -33,6 +37,13 @@ class _AnimationPageState extends State<AnimationPage> {
         ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    // 5. ページが不要になったら、プレイヤーのリソースを解放（重要！）
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,7 +64,7 @@ class _AnimationPageState extends State<AnimationPage> {
                   curve: Curves.easeOut,
                   bottom: _isBoiling ? 200.0 : 50.0,
                   child: AnimatedOpacity(
-                    duration: const Duration(seconds: 2),
+                    duration: const Duration(seconds: 5),
                     opacity: _isBoiling ? 1.0 : 0.0,
                     child: Image.asset('images/steam.png', width: 100),
                   ),

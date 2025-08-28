@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'ThirdPage.dart';
+import 'NiruPage.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 
@@ -72,7 +72,7 @@ class _NextPageState extends State<NextPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ThirdPage(
+                              builder: (context) => NiruPage(
                                 // ここでcurryVegetablesリストを渡す
                                 curryVegetables: curryVegetables,
                               ),
