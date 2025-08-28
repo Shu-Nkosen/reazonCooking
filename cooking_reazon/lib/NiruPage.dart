@@ -54,6 +54,7 @@ class _NiruPageState extends State<NiruPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Stack(
+              clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
                 Image.asset('images/pot.png', width: 300),
