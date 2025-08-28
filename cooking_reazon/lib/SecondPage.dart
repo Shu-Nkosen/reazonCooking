@@ -6,6 +6,7 @@ import 'NiruPage.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
+import 'package:vibration/vibration.dart'; // Vibrationパッケージをインポート
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -17,6 +18,9 @@ class NextPage extends StatefulWidget {
 class _NextPageState extends State<NextPage> {
   // StreamSubscriptionのインスタンスを保持する変数
   StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
+  late Timer _timer;
+  late Timer _countdownTimer; // 1秒ごとに更新するタイマーを追加
+  final int cookTime = 20;
   int _userCutCount = 0;
   int _userCutState = 1;
   int _currentVegetable = 0;
@@ -27,6 +31,8 @@ class _NextPageState extends State<NextPage> {
 
   late AudioPlayer _cutSoundPlayer;
   late AudioPlayer _bgmPlayer;
+
+  late int _remainingSeconds = cookTime;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +58,14 @@ class _NextPageState extends State<NextPage> {
                 fontSize: 30, // ここに好きなサイズを数値で指定
               ),
             ),
+            Text(
+              "残り$_remainingSeconds秒", // 残り秒数を表示するTextウィジェットを追加
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
             if (_userCutCount < 30)
               Image.asset(
                 'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
@@ -69,11 +83,8 @@ class _NextPageState extends State<NextPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
+                          _handleNextVegetable();
                           _bgmPlayer.stop();
-
-                          setState(() {
-                            curryVegetables[_currentVegetable] = _userCutCount;
-                          });
                           // ここでオーバレイを削除
                           _overlayEntry?.remove();
                           _overlayEntry = null;
@@ -103,11 +114,7 @@ class _NextPageState extends State<NextPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            curryVegetables[_currentVegetable] = _userCutCount;
-                            _currentVegetable += 1;
-                            _userCutCount = 0;
-                          });
+                          _handleNextVegetable(); // 共通のメソッドを呼び出す
                         },
                         child: Center(
                           child: const Text(
@@ -173,6 +180,11 @@ class _NextPageState extends State<NextPage> {
       _showKnifeOverlay();
     });
 
+    _timer = Timer(Duration.zero, () {}); // ダミーのタイマーで初期化
+    _countdownTimer = Timer(Duration.zero, () {}); // ダミーのタイマーで初期化
+
+    _startTimers(); // タイマーを開始
+
     // リスナーを_accelerometerSubscriptionに格納
     _accelerometerSubscription = userAccelerometerEvents.listen((
       UserAccelerometerEvent event,
@@ -187,6 +199,71 @@ class _NextPageState extends State<NextPage> {
         });
       }
     });
+  }
+
+  void _startTimers() {
+    // 既存のタイマーがあればキャンセル
+    if (_timer.isActive) _timer.cancel();
+    if (_countdownTimer.isActive) _countdownTimer.cancel();
+
+    // setStateで秒数をリセットし、UIを即座に更新する
+    setState(() {
+      _remainingSeconds = cookTime;
+    });
+
+    if (this.mounted && _currentVegetable <= 3) {
+      _timer = Timer(Duration(seconds: cookTime), () {
+        _handleNextVegetable();
+      });
+
+      // 1秒ごとにカウントダウンを更新するタイマー
+      _countdownTimer = Timer.periodic(const Duration(seconds: 1), (
+        timer,
+      ) async {
+        if (_remainingSeconds > 0) {
+          setState(() {
+            _remainingSeconds--;
+          });
+          // 1秒になったときにバイブレーションをトリガー
+          if (_remainingSeconds == 1) {
+            if (await Vibration.hasVibrator()) {
+              Vibration.vibrate(duration: 500);
+            }
+            Future.delayed(const Duration(seconds: 1), () {
+              if (_currentVegetable == 3) {
+                _overlayEntry?.remove();
+                _overlayEntry = null;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NiruPage(
+                      // ここでcurryVegetablesリストを渡す
+                      curryVegetables: curryVegetables,
+                    ),
+                  ),
+                );
+              }
+            });
+          }
+        } else {
+          timer.cancel();
+        }
+      });
+    }
+  }
+
+  void _handleNextVegetable() {
+    if (_currentVegetable >= 3) {
+      _timer.cancel();
+      _countdownTimer.cancel();
+      return;
+    }
+    setState(() {
+      curryVegetables[_currentVegetable] = _userCutCount;
+      _currentVegetable += 1;
+      _userCutCount = 0;
+    });
+    _startTimers(); // 次の野菜に切り替わったら両方のタイマーをリセット
   }
 
   void _playCutSound() async {
@@ -217,6 +294,8 @@ class _NextPageState extends State<NextPage> {
     _accelerometerSubscription?.cancel();
     _overlayEntry?.remove();
     _overlayEntry = null;
+    _timer.cancel();
+    _countdownTimer.cancel(); // カウントダウンタイマーもキャンセル
     _cutSoundPlayer.dispose();
     _bgmPlayer.dispose();
     super.dispose();
