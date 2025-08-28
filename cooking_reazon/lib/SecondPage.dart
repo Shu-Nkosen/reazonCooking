@@ -25,83 +25,108 @@ class _NextPageState extends State<NextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Flutter Demo Home Page")),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text("振ってカット！！", style: Theme.of(context).textTheme.titleLarge),
-          if (_userCutCount < 30)
-            Image.asset(
-              'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
-            ),
-          Text(
-            "${_userCutCount.toString()}回！",
-            style: Theme.of(context).textTheme.titleLarge,
+      appBar: AppBar(
+        title: Text(
+          "ビストロ・レアゾン",
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 251, 250, 250),
           ),
-          Center(
-            child: _currentVegetable == 4
-                ? SizedBox(
-                    width: 250, // ボタンの幅を指定
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          curryVegetables.add(_userCutCount);
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ThirdPage(
-                              // ここでcurryVegetablesリストを渡す
-                              curryVegetables: curryVegetables,
+        ),
+        backgroundColor: Color.fromARGB(255, 86, 20, 40),
+      ),
+      body: Container(
+        color: Color.fromARGB(133, 209, 209, 206),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              "振ってカット！！",
+              style: TextStyle(
+                fontSize: 30, // ここに好きなサイズを数値で指定
+              ),
+            ),
+            if (_userCutCount < 30)
+              Image.asset(
+                'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
+              ),
+            Text(
+              "${_userCutCount.toString()}回！",
+              style: TextStyle(
+                fontSize: 30, // ここに好きなサイズを数値で指定
+              ),
+            ),
+            Center(
+              child: _currentVegetable == 4
+                  ? SizedBox(
+                      width: 250, // ボタンの幅を指定
+                      height: 80,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            curryVegetables.add(_userCutCount);
+                          });
+                          // ここでオーバレイを削除
+                          _overlayEntry?.remove();
+                          _overlayEntry = null;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ThirdPage(
+                                // ここでcurryVegetablesリストを渡す
+                                curryVegetables: curryVegetables,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Center(
+                          child: const Text(
+                            '煮る！',
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Color.fromARGB(255, 75, 196, 91),
                             ),
                           ),
-                        );
-                      },
-                      child: Center(
-                        child: const Text(
-                          '煮る！',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color.fromARGB(255, 75, 196, 91),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      width: 250, // ボタンの幅を指定
+                      height: 80,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // ここでオーバレイを削除
+                          _overlayEntry?.remove();
+                          _overlayEntry = null;
+                          setState(() {
+                            curryVegetables.add(_userCutCount);
+                            _currentVegetable += 1;
+                            _userCutCount = 0;
+                          });
+                          _showKnifeOverlay();
+                        },
+                        child: Center(
+                          child: const Text(
+                            '次の野菜へ！',
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Color.fromARGB(255, 75, 196, 91),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  )
-                : SizedBox(
-                    width: 250, // ボタンの幅を指定
-                    height: 80,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          curryVegetables.add(_userCutCount);
-                          _currentVegetable += 1;
-                          _userCutCount = 0;
-                        });
-                        _showKnifeOverlay();
-                      },
-                      child: Center(
-                        child: const Text(
-                          '次の野菜へ！',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color.fromARGB(255, 75, 196, 91),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-          ),
-
-          ElevatedButton(
-            onPressed: _playCutSound, // ボタンを押したら音声再生メソッドを呼び出す
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange, // ボタンの色をオレンジに
             ),
-            child: const Text('【デバッグ用】音声再生テスト'),
-          ),
-        ],
+
+            ElevatedButton(
+              onPressed: _playCutSound, // ボタンを押したら音声再生メソッドを呼び出す
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange, // ボタンの色をオレンジに
+              ),
+              child: const Text('【デバッグ用】音声再生テスト'),
+            ),
+          ],
+        ),
       ),
     );
   }
