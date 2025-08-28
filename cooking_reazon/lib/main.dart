@@ -2,17 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'SecondPage.dart';
+import 'ThirdPage.dart';
 
 void main() {
   runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key});
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Bistro Reazon', home: MyHomePage());
+    return MaterialApp(
+      title: 'Bistro Reazon',
+      initialRoute: '/', // アプリ起動時の最初のルート
+      routes: {
+        '/': (context) => const MyHomePage(),
+        '/second': (context) => const NextPage(),
+        '/third': (context) => const ThirdPage(curryVegetables: []),
+      },
+    );
   }
 }
 

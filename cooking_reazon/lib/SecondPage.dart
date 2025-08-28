@@ -100,9 +100,6 @@ class _NextPageState extends State<NextPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          // ここでオーバレイを削除
-                          _overlayEntry?.remove();
-                          _overlayEntry = null;
                           setState(() {
                             curryVegetables[_currentVegetable] = _userCutCount;
                             _currentVegetable += 1;
@@ -133,7 +130,7 @@ class _NextPageState extends State<NextPage> {
                 },
                 child: Center(
                   child: const Text(
-                    '戻る',
+                    'ホームに戻る',
                     style: TextStyle(
                       fontSize: 25,
                       color: Color.fromARGB(255, 75, 196, 91),
