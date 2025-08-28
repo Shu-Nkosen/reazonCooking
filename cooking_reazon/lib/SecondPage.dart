@@ -1,8 +1,11 @@
+// secondPage.dart
+
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'ThirdPage.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -12,11 +15,13 @@ class NextPage extends StatefulWidget {
 }
 
 class _NextPageState extends State<NextPage> {
+  // StreamSubscriptionのインスタンスを保持する変数
+  StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
   int _userCutCount = 0;
   int _userCutState = 1;
-  int _currentVegetable = 1;
-  List<int> curryVegetables = [];
-  Map<int, String> vegetableImages = {1: 'C', 2: 'P', 3: 'O', 4: 'M'};
+  int _currentVegetable = 0;
+  List<int> curryVegetables = [0, 0, 0, 0];
+  Map<int, String> vegetableImages = {0: 'C', 1: 'P', 2: 'O', 3: 'M'};
 
   OverlayEntry? _overlayEntry;
 
@@ -57,14 +62,14 @@ class _NextPageState extends State<NextPage> {
               ),
             ),
             Center(
-              child: _currentVegetable == 4
+              child: _currentVegetable == 3
                   ? SizedBox(
                       width: 250, // ボタンの幅を指定
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            curryVegetables.add(_userCutCount);
+                            curryVegetables[_currentVegetable] = _userCutCount;
                           });
                           // ここでオーバレイを削除
                           _overlayEntry?.remove();
@@ -99,11 +104,10 @@ class _NextPageState extends State<NextPage> {
                           _overlayEntry?.remove();
                           _overlayEntry = null;
                           setState(() {
-                            curryVegetables.add(_userCutCount);
+                            curryVegetables[_currentVegetable] = _userCutCount;
                             _currentVegetable += 1;
                             _userCutCount = 0;
                           });
-                          _showKnifeOverlay();
                         },
                         child: Center(
                           child: const Text(
@@ -116,6 +120,27 @@ class _NextPageState extends State<NextPage> {
                         ),
                       ),
                     ),
+            ),
+            // 戻るボタン
+            SizedBox(
+              width: 250, // ボタンの幅を指定
+              height: 80,
+              child: ElevatedButton(
+                onPressed: () {
+                  _overlayEntry?.remove();
+                  _overlayEntry = null;
+                  Navigator.pop(context);
+                },
+                child: Center(
+                  child: const Text(
+                    '戻る',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Color.fromARGB(255, 75, 196, 91),
+                    ),
+                  ),
+                ),
+              ),
             ),
 
             ElevatedButton(
@@ -137,19 +162,23 @@ class _NextPageState extends State<NextPage> {
 
     _audioPlayer = AudioPlayer();
     _audioPlayer.setPlayerMode(PlayerMode.lowLatency);
-    // This callback runs after the initial frame is built, avoiding the error.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showKnifeOverlay();
     });
 
-    userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      setState(() {
-        if (event.x * _userCutState < -10) {
-          _userCutCount += 1;
-          _playCutSound();
-        }
-        _userCutState *= -1;
-      });
+    // リスナーを_accelerometerSubscriptionに格納
+    _accelerometerSubscription = userAccelerometerEvents.listen((
+      UserAccelerometerEvent event,
+    ) {
+      if (mounted) {
+        setState(() {
+          if (event.x * _userCutState < -10) {
+            _userCutCount += 1;
+            _playCutSound();
+          }
+          _userCutState *= -1;
+        });
+      }
     });
   }
 
@@ -162,25 +191,25 @@ class _NextPageState extends State<NextPage> {
   }
 
   void _showKnifeOverlay() {
-    if (_overlayEntry == null) {
-      _overlayEntry = OverlayEntry(
-        builder: (context) => Positioned(
-          bottom: 150,
-          right: -50,
-          child: Transform.rotate(
-            angle: 20 * math.pi / 180,
-            child: Image.asset('images/knife.png', width: 300, height: 300),
-          ),
+    _overlayEntry?.remove();
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        bottom: 250,
+        right: -50,
+        child: Transform.rotate(
+          angle: 20 * math.pi / 180,
+          child: Image.asset('images/knife.png', width: 300, height: 300),
         ),
-      );
-
-      Overlay.of(context).insert(_overlayEntry!);
-    }
+      ),
+    );
+    Overlay.of(context).insert(_overlayEntry!);
   }
 
   @override
   void dispose() {
+    _accelerometerSubscription?.cancel();
     _overlayEntry?.remove();
+    _overlayEntry = null;
     _audioPlayer.dispose();
     super.dispose();
   }
