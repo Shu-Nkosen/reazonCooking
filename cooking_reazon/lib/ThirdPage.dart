@@ -129,27 +129,27 @@ class _ThirdPageState extends State<ThirdPage> {
     }
     else if(reI[0]+reI[1]+reI[2]+reI[3]==2){
       setState((){
-        ojiCo="ダイナミックとミニマムが混ざり合っておる!";
+        ojiCo="ダイナミックとミニマムが\n混ざり合っておる!";
       });
     }
     else if(reI[0]==1){
       setState((){
-        ojiCo="じゃがいもがそのままじゃ！主張が強いのう…";
+        ojiCo="じゃがいもがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[1]==1){
       setState((){
-        ojiCo="にんじんがそのままじゃ！主張が強いのう…";
+        ojiCo="にんじんがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[2]==1){
       setState((){
-        ojiCo="玉ねぎがそのままじゃ！主張が強いのう…";
+        ojiCo="玉ねぎがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[3]==1){
       setState((){
-        ojiCo="肉がそのままじゃ!野蛮じゃのう…";
+        ojiCo="肉がそのままじゃ!\n野蛮じゃのう…";
       });
     }
     else{
