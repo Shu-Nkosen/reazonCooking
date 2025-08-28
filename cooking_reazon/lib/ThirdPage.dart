@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:speech_balloon/speech_balloon.dart';
 
 class ThirdPage extends StatefulWidget {
   final List<int> curryVegetables;
@@ -12,12 +13,15 @@ class ThirdPage extends StatefulWidget {
   State<ThirdPage> createState() => _ThirdPageState();
 }
 
+
+
 class _ThirdPageState extends State<ThirdPage> {
   String _userAccelerometerValues = "";
   String _gyroscopeValues = "";
   late int totalScore;
   late final List<int> resultVegetables;
   late final List<int> reI;
+  String ojiCo="";
 
     @override
   void initState() {
@@ -33,6 +37,7 @@ class _ThirdPageState extends State<ThirdPage> {
     }
     _fifteenScore();
     totalScore = _calculateScore();
+    _ojiComment();
   }
 
 void _fifteenScore() {
@@ -109,6 +114,54 @@ void _fifteenScore() {
     return score; // Clamp the final score to be between 5 and 100
   }
 
+  void _ojiComment(){
+    if(totalScore==100){
+      setState((){
+        ojiCo="完璧じゃ！見事見事！";
+      });
+    }
+    else if(totalScore==0){
+      setState((){
+        ojiCo="これは料理ではない。毒じゃぜ。";
+      });
+    }
+    else if(reI[0]+reI[1]+reI[2]+reI[3]==3){
+      setState((){
+        ojiCo="大胆な料理じゃ!具材が大きいのう";
+      });
+    }
+    else if(reI[0]+reI[1]+reI[2]+reI[3]==2){
+      setState((){
+        ojiCo="ダイナミックとミニマムが混ざり合っておる!まるで複合住宅じゃ!!";
+      });
+    }
+    else if(reI[0]==1){
+      setState((){
+        ojiCo="じゃがいもがそのままじゃ！丸呑みできるかのう…";
+      });
+    }
+    else if(reI[1]==1){
+      setState((){
+        ojiCo="にんじんがそのままじゃ！主張が強いのう…";
+      });
+    }
+    else if(reI[2]==1){
+      setState((){
+        ojiCo="玉ねぎがそのままじゃ！涙が出るのが嫌だったのかのう…";
+      });
+    }
+    else if(reI[3]==1){
+      setState((){
+        ojiCo="肉がそのままじゃ!野蛮じゃのう…";
+      });
+    }
+    else{
+      setState((){
+        ojiCo="細かすぎて見えん！";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,14 +178,44 @@ void _fifteenScore() {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-              resultVegetables.toString(),
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+          // Text(
+          //     resultVegetables.toString(),
+          //     style: Theme.of(context).textTheme.headlineMedium,
+          //   ),
          Text(
             'Total Score: $totalScore', // Display the total score here
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              color:Colors.black,
+            
+              // ストロークの設定
+            ),
           ),
+          Row(children:[
+            Image.asset(
+              'images/ojisan.png',
+              width:100,
+              height:100,
+            ),
+            SpeechBalloon(
+              nipLocation: NipLocation.left,
+              borderColor: Colors.green,
+              height: 70, // マルなので同じheightとwidth
+              width: 300,
+              borderRadius: 40,
+              offset: Offset(0, -1), // 棘の位置がずれてしまったのでoffsetで位置を修正してあげる
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '$ojiCo',
+                    style: TextStyle(color: Colors.green,fontSize:15),
+                  ),
+                ],
+              ),
+            )
+          ]),
           if (totalScore == 100)
           Image.asset(
             'images/curry100.png',
@@ -158,25 +241,10 @@ void _fifteenScore() {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
-
-          // ElevatedButton(
-          //     onPressed: toresult(),
-          // ),
-
-      // if (_result)
-      // // 半透明の暗幕
-      // ModalBarrier(
-      //   // ignore: deprecated_member_use
-      //   color: Colors.black.withOpacity(0.5), // 黒色で透明度50%
-      //   dismissible: false, // タップで閉じないようにする
-      // ),
-    // 3. リザルト画面
-      // if (_result)
-      // Center(
-      //   child: ResultScreen(),
-      // ),
         ],
       ),
     );
   }
+
+  
 }
