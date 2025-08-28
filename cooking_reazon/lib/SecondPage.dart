@@ -196,7 +196,7 @@ class _NextPageState extends State<NextPage> {
     if (_timer.isActive) _timer.cancel();
     if (_countdownTimer.isActive) _countdownTimer.cancel();
 
-    _remainingSeconds = 10; // 秒数をリセット
+    _remainingSeconds = 20; // 秒数をリセット
 
     if (this.mounted && _currentVegetable < 3) {
       // 20秒後に実行するタイマー
