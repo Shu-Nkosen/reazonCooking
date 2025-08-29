@@ -190,114 +190,112 @@ class _ThirdPageState extends State<ThirdPage> {
         ),
         backgroundColor: Color.fromARGB(255, 86, 20, 40),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Total Score: $totalScore',
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          Row(children: [
-            Image.asset(
-              'images/ojisan.png',
-              width: 100,
-              height: 100,
-            ),
-            SpeechBalloon(
-              nipLocation: NipLocation.left,
-              borderColor: Color.fromARGB(255, 86, 20, 40),
-              height: 70,
-              width: 300,
-              borderRadius: 40,
-              offset: Offset(0, -1),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: SingleChildScrollView(
+          // SingleChildScrollViewで子ウィジェットをラップ
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Total Score: $totalScore',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              Row(
                 children: [
-                  Text(
-                    '$ojiCo',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 86, 20, 40),
-                      fontSize: 18,
+                  Image.asset('images/ojisan.png', width: 100, height: 100),
+                  SpeechBalloon(
+                    nipLocation: NipLocation.left,
+                    borderColor: Color.fromARGB(255, 86, 20, 40),
+                    height: 70,
+                    width: 300,
+                    borderRadius: 40,
+                    offset: Offset(0, -1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$ojiCo',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 86, 20, 40),
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ]),
-          if (totalScore == 100)
-            Image.asset(
-              'images/curry100.png',
-              width: 500,
-              height: 500,
-            )
-          else if (totalScore == 0)
-            Image.asset(
-              'images/curry0.png',
-              width: 500,
-              height: 500,
-            )
-          else if (widget.curryVegetables.every((element) => element == 7))
-            Image.asset(
-              'images/curry777.png',
-              width: 500, // 画像の幅を調整
-              height: 500, // 画像の高さを調整
-            )
-          else if (widget.curryVegetables.every((element) => element >= 50))
-            Image.asset(
-              'images/stew.png',
-              width: 500, // 画像の幅を調整
-              height: 500, // 画像の高さを調整
-            )
-          else
-            Image.asset(
-              'images/curry${reI[0]}${reI[1]}${reI[2]}${reI[3]}.png',
-              width: 500,
-              height: 500,
-            ),
-          Text(
-            _userAccelerometerValues,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
-          SizedBox(
-            width: 250,
-            height: 80,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+              if (totalScore == 100)
+                Image.asset('images/curry100.png', width: 500, height: 500)
+              else if (totalScore == 0)
+                Image.asset('images/curry0.png', width: 500, height: 500)
+              else if (widget.curryVegetables.every((element) => element == 7))
+                Image.asset(
+                  'images/curry777.png',
+                  width: 500, // 画像の幅を調整
+                  height: 500, // 画像の高さを調整
+                )
+              else if (widget.curryVegetables.every((element) => element >= 50))
+                Image.asset(
+                  'images/stew.png',
+                  width: 500, // 画像の幅を調整
+                  height: 500, // 画像の高さを調整
+                )
+              else
+                Image.asset(
+                  'images/curry${reI[0]}${reI[1]}${reI[2]}${reI[3]}.png',
+                  width: 500,
+                  height: 500,
                 ),
+              Text(
+                _userAccelerometerValues,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              child: Ink(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Colors.orange[300]!,
-                      Colors.orange[500]!,
-                      Colors.orange[700]!,
-                    ],
+              Text(
+                _gyroscopeValues,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                width: 250,
+                height: 80,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                ),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'ホームに戻る',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Colors.orange[300]!,
+                          Colors.orange[500]!,
+                          Colors.orange[700]!,
+                        ],
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'ホームに戻る',
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
