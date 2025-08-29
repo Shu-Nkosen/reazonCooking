@@ -138,20 +138,17 @@ class _ThirdPageState extends State<ThirdPage> {
       setState(() {
         ojiCo = "これは料理ではない。毒じゃぜ。";
       });
-    }
-    else if(widget.curryVegetables.every((element) => element == 7)){
-      setState((){
-        ojiCo="これは!!伝説のカレーじゃ!!!";
+    } else if (widget.curryVegetables.every((element) => element == 7)) {
+      setState(() {
+        ojiCo = "これは!!伝説のカレーじゃ!!!";
       });
-    }
-    else if(widget.curryVegetables.every((element) => element >= 50)){
-      setState((){
-        ojiCo="なんと!?\nシチューが出来上がったぞ!!";
+    } else if (widget.curryVegetables.every((element) => element >= 50)) {
+      setState(() {
+        ojiCo = "なんと!?\nシチューが出来上がったぞ!!";
       });
-    }
-    else if(reI[0]+reI[1]+reI[2]+reI[3]==3){
-      setState((){
-        ojiCo="大胆な料理じゃ!具材が大きいのう";
+    } else if (reI[0] + reI[1] + reI[2] + reI[3] == 3) {
+      setState(() {
+        ojiCo = "大胆な料理じゃ!具材が大きいのう";
       });
     } else if (reI[0] + reI[1] + reI[2] + reI[3] == 2) {
       setState(() {
@@ -243,13 +240,13 @@ class _ThirdPageState extends State<ThirdPage> {
               width: 500,
               height: 500,
             )
-          else if(widget.curryVegetables.every((element) => element == 7))
+          else if (widget.curryVegetables.every((element) => element == 7))
             Image.asset(
               'images/curry777.png',
               width: 500, // 画像の幅を調整
               height: 500, // 画像の高さを調整
             )
-          else if(widget.curryVegetables.every((element) => element >= 50))
+          else if (widget.curryVegetables.every((element) => element >= 50))
             Image.asset(
               'images/stew.png',
               width: 500, // 画像の幅を調整
@@ -273,29 +270,28 @@ class _ThirdPageState extends State<ThirdPage> {
               onPressed: () {
                 Navigator.popUntil(context, (route) => route.isFirst);
               },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        Colors.orange[300]!,
-                        Colors.orange[500]!,
-                        Colors.orange[700]!,
-                      ],
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+              ),
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      Colors.orange[300]!,
+                      Colors.orange[500]!,
+                      Colors.orange[700]!,
+                    ],
                   ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'ホームに戻る',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'ホームに戻る',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
               ),
