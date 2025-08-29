@@ -23,7 +23,7 @@ class _NextPageState extends State<NextPage> {
   int _userCutState = 1;
   int _currentVegetable = 0;
   List<int> curryVegetables = [0, 0, 0, 0];
-  Map<int, String> vegetableImages = {0: 'C', 1: 'P', 2: 'O', 3: 'M'};
+  Map<int, String> vegetableImages = {0: 'P', 1: 'C', 2: 'O', 3: 'M'};
 
   OverlayEntry? _overlayEntry;
 
