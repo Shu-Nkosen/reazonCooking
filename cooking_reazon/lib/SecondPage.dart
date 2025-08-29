@@ -1,5 +1,3 @@
-// secondPage.dart
-
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'NiruPage.dart';
@@ -38,21 +36,21 @@ class _NextPageState extends State<NextPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "ビストロ・レアゾン",
           style: TextStyle(
             fontStyle: FontStyle.italic,
             color: Color.fromARGB(255, 251, 250, 250),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 86, 20, 40),
+        backgroundColor: const Color.fromARGB(255, 86, 20, 40),
       ),
       body: Container(
-        color: Color.fromARGB(133, 209, 209, 206),
+        color: const Color.fromARGB(133, 209, 209, 206),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text(
+            const Text(
               "振ってカット！！",
               style: TextStyle(
                 fontSize: 30,
@@ -60,7 +58,7 @@ class _NextPageState extends State<NextPage> {
             ),
             Text(
               "残り$_remainingSeconds秒",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.red,
@@ -69,104 +67,61 @@ class _NextPageState extends State<NextPage> {
             if (_userCutCount < 30)
               Image.asset(
                 'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
+              )
+            else
+              Image.asset(
+                'images/6${vegetableImages[_currentVegetable]}.png',
               ),
             Text(
               "${_userCutCount.toString()}回！",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
               ),
             ),
             Center(
-              child: _currentVegetable == 3
-                  ? SizedBox(
-                      width: 250,
-                      height: 80,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _handleNextVegetable();
-                          _bgmPlayer.stop();
-                          _overlayEntry?.remove();
-                          _overlayEntry = null;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NiruPage(
-                                curryVegetables: curryVegetables,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Colors.orange[300]!,
-                                Colors.orange[500]!,
-                                Colors.orange[700]!,
-                              ],
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: const Text(
-                              '煮る！',
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+              child: SizedBox(
+                width: 250,
+                height: 80,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_currentVegetable < 3) {
+                      _handleNextVegetable();
+                    } else {
+                      _handleFinishCooking();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Colors.orange[300]!,
+                          Colors.orange[500]!,
+                          Colors.orange[700]!,
+                        ],
                       ),
-                    )
-                  : SizedBox(
-                      width: 250,
-                      height: 80,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _handleNextVegetable();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Colors.orange[300]!,
-                                Colors.orange[500]!,
-                                Colors.orange[700]!,
-                              ],
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: const Text(
-                              '次の野菜へ！',
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        _currentVegetable == 3 ? '煮る！' : '次の野菜へ！',
+                        style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
                         ),
                       ),
                     ),
+                  ),
+                ),
+              ),
             ),
 
             // 戻るボタン
@@ -257,9 +212,13 @@ class _NextPageState extends State<NextPage> {
       _remainingSeconds = cookTime;
     });
 
-    if (this.mounted && _currentVegetable <= 3) {
+    if (mounted && _currentVegetable <= 3) {
       _timer = Timer(Duration(seconds: cookTime), () {
-        _handleNextVegetable();
+        if (_currentVegetable < 3) {
+          _handleNextVegetable();
+        } else {
+          _handleFinishCooking();
+        }
       });
 
       _countdownTimer = Timer.periodic(const Duration(seconds: 1), (
@@ -274,20 +233,6 @@ class _NextPageState extends State<NextPage> {
             if (await Vibration.hasVibrator()) {
               Vibration.vibrate(duration: 500);
             }
-            Future.delayed(const Duration(seconds: 1), () {
-              if (_currentVegetable == 3) {
-                _overlayEntry?.remove();
-                _overlayEntry = null;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NiruPage(
-                      curryVegetables: curryVegetables,
-                    ),
-                  ),
-                );
-              }
-            });
           }
         } else {
           timer.cancel();
@@ -308,6 +253,23 @@ class _NextPageState extends State<NextPage> {
       _userCutCount = 0;
     });
     _startTimers();
+  }
+
+  void _handleFinishCooking() {
+    _timer.cancel();
+    _countdownTimer.cancel();
+    curryVegetables[_currentVegetable] = _userCutCount;
+    _bgmPlayer.stop();
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NiruPage(
+          curryVegetables: curryVegetables,
+        ),
+      ),
+    );
   }
 
   void _playCutSound() async {

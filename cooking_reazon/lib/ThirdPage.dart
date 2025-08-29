@@ -171,7 +171,7 @@ class _ThirdPageState extends State<ThirdPage> {
       });
     } else {
       setState(() {
-        ojiCo = "細かすぎて見えん！";
+        ojiCo = "いい感じ！惜しい？";
       });
     }
   }
