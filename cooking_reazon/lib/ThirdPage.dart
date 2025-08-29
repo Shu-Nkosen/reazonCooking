@@ -250,12 +250,29 @@ class _ThirdPageState extends State<ThirdPage> {
               onPressed: () {
                 Navigator.popUntil(context, (route) => route.isFirst);
               },
-              child: Center(
-                child: const Text(
-                  'ホームに戻る',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Color.fromARGB(255, 75, 196, 91),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Colors.orange[300]!,
+                        Colors.orange[500]!,
+                        Colors.orange[700]!,
+                      ],
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'ホームに戻る',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
