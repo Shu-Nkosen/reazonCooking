@@ -135,17 +135,17 @@ class _ThirdPageState extends State<ThirdPage> {
       });
     } else if (totalScore == 0) {
       setState(() {
-        ojiCo = "これは料理ではない。毒じゃぜ。";
+        ojiCo = "これは料理ではない。毒じゃ。";
       });
     } else if (widget.curryVegetables.every((element) => element == 7)) {
       setState(() {
         ojiCo = "これは!!\n伝説のカレーじゃ!!!";
       });
-    } else if (widget.curryVegetables.every((element) => element >= 50)) {
+    } else if (widget.curryVegetables.every((element) => element >= 35)) {
       setState(() {
         ojiCo = "なんと!?\nシチューが出来上がったぞ!!";
       });
-    } else if (reI[0] + reI[1] + reI[2] + reI[3] == 3) {
+    } else if (reI[0] + reI[1] + reI[2] + reI[3] >= 3) {
       setState(() {
         ojiCo = "大胆な料理じゃ!\n具材が大きいのう";
       });
@@ -155,19 +155,19 @@ class _ThirdPageState extends State<ThirdPage> {
       });
     } else if (reI[0] == 1) {
       setState(() {
-        ojiCo = "じゃがいもがそのままじゃ！\n主張が強いのう…";
+        ojiCo = "じゃがいもが大きい！\n主張が強いのう…";
       });
     } else if (reI[1] == 1) {
       setState(() {
-        ojiCo = "にんじんがそのままじゃ！\n主張が強いのう…";
+        ojiCo = "にんじんが大きい！\n主張が強いのう…";
       });
     } else if (reI[2] == 1) {
       setState(() {
-        ojiCo = "玉ねぎがそのままじゃ！\n主張が強いのう…";
+        ojiCo = "玉ねぎが大きい！\n主張が強いのう…";
       });
     } else if (reI[3] == 1) {
       setState(() {
-        ojiCo = "肉がそのままじゃ!\n野蛮じゃのう…";
+        ojiCo = "肉が大きい!\n野蛮じゃのう…";
       });
     } else {
       setState(() {
@@ -210,7 +210,7 @@ class _ThirdPageState extends State<ThirdPage> {
                     nipLocation: NipLocation.left,
                     borderColor: Color.fromARGB(255, 86, 20, 40),
                     height: 70,
-                    width: 300,
+                    width: 280,
                     borderRadius: 40,
                     offset: Offset(0, -1),
                     child: Row(
@@ -246,7 +246,7 @@ class _ThirdPageState extends State<ThirdPage> {
                   width: 500,
                   height: 500,
                 )
-              else if (widget.curryVegetables.every((element) => element >= 50))
+              else if (widget.curryVegetables.every((element) => element >= 35))
                 Image.asset(
                   'images/stew.png',
                   width: 500,
