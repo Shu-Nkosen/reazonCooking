@@ -69,6 +69,10 @@ class _NextPageState extends State<NextPage> {
             if (_userCutCount < 30)
               Image.asset(
                 'images/${((_userCutCount / 5) + 1).toInt()}${vegetableImages[_currentVegetable]}.png',
+              )
+            else
+              Image.asset(
+                'images/6${vegetableImages[_currentVegetable]}.png',
               ),
             Text(
               "${_userCutCount.toString()}回！",
@@ -257,7 +261,7 @@ class _NextPageState extends State<NextPage> {
       _remainingSeconds = cookTime;
     });
 
-    if (this.mounted && _currentVegetable <= 3) {
+    if (mounted && _currentVegetable <= 3) {
       _timer = Timer(Duration(seconds: cookTime), () {
         _handleNextVegetable();
       });
