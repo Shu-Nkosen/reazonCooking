@@ -1,8 +1,7 @@
-// ThirdPage.dart
-
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:speech_balloon/speech_balloon.dart';
+import 'package:audioplayers/audioplayers.dart'; // audioplayersをインポート
 
 class ThirdPage extends StatefulWidget {
   final List<int> curryVegetables;
@@ -13,19 +12,24 @@ class ThirdPage extends StatefulWidget {
   State<ThirdPage> createState() => _ThirdPageState();
 }
 
-
-
 class _ThirdPageState extends State<ThirdPage> {
+  // AudioPlayerのインスタンスを作成
+  late AudioPlayer _audioPlayer;
+
   String _userAccelerometerValues = "";
   String _gyroscopeValues = "";
   late int totalScore;
   late final List<int> resultVegetables;
   late final List<int> reI;
-  String ojiCo="";
+  String ojiCo = "";
 
   @override
   void initState() {
     super.initState();
+    // AudioPlayerを初期化
+    _audioPlayer = AudioPlayer();
+    _playSounds(); // ページが作成されたときに音を再生
+
     resultVegetables = widget.curryVegetables
         .map((int value) => (value ~/ 5))
         .toList();
@@ -40,6 +44,20 @@ class _ThirdPageState extends State<ThirdPage> {
     _fifteenScore();
     totalScore = _calculateScore();
     _ojiComment();
+  }
+
+  Future<void> _playSounds() async {
+    late AudioPlayer bgmPlayer;
+    bgmPlayer = AudioPlayer();
+    bgmPlayer.setVolume(2);
+    await bgmPlayer.play(AssetSource('sounds/done1.mp3'));
+  }
+
+  // ページが破棄されるときにプレイヤーを解放
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   void _fifteenScore() {
@@ -108,53 +126,45 @@ class _ThirdPageState extends State<ThirdPage> {
         }
       }
     }
-    return score; // Clamp the final score to be between 5 and 100
+    return score;
   }
 
-  void _ojiComment(){
-    if(totalScore==100){
-      setState((){
-        ojiCo="完璧じゃ！見事見事！";
+  void _ojiComment() {
+    if (totalScore == 100) {
+      setState(() {
+        ojiCo = "完璧じゃ！見事見事！";
       });
-    }
-    else if(totalScore==0){
-      setState((){
-        ojiCo="これは料理ではない。毒じゃぜ。";
+    } else if (totalScore == 0) {
+      setState(() {
+        ojiCo = "これは料理ではない。毒じゃぜ。";
       });
-    }
-    else if(reI[0]+reI[1]+reI[2]+reI[3]==3){
-      setState((){
-        ojiCo="大胆な料理じゃ!具材が大きいのう";
+    } else if (reI[0] + reI[1] + reI[2] + reI[3] == 3) {
+      setState(() {
+        ojiCo = "大胆な料理じゃ!具材が大きいのう";
       });
-    }
-    else if(reI[0]+reI[1]+reI[2]+reI[3]==2){
-      setState((){
-        ojiCo="ダイナミックとミニマムが混ざり合っておる!";
+    } else if (reI[0] + reI[1] + reI[2] + reI[3] == 2) {
+      setState(() {
+        ojiCo = "ダイナミックとミニマムが混ざり合っておる!";
       });
-    }
-    else if(reI[0]==1){
-      setState((){
-        ojiCo="じゃがいもがそのままじゃ！主張が強いのう…";
+    } else if (reI[0] == 1) {
+      setState(() {
+        ojiCo = "じゃがいもがそのままじゃ！主張が強いのう…";
       });
-    }
-    else if(reI[1]==1){
-      setState((){
-        ojiCo="にんじんがそのままじゃ！主張が強いのう…";
+    } else if (reI[1] == 1) {
+      setState(() {
+        ojiCo = "にんじんがそのままじゃ！主張が強いのう…";
       });
-    }
-    else if(reI[2]==1){
-      setState((){
-        ojiCo="玉ねぎがそのままじゃ！主張が強いのう…";
+    } else if (reI[2] == 1) {
+      setState(() {
+        ojiCo = "玉ねぎがそのままじゃ！主張が強いのう…";
       });
-    }
-    else if(reI[3]==1){
-      setState((){
-        ojiCo="肉がそのままじゃ!野蛮じゃのう…";
+    } else if (reI[3] == 1) {
+      setState(() {
+        ojiCo = "肉がそのままじゃ!野蛮じゃのう…";
       });
-    }
-    else{
-      setState((){
-        ojiCo="細かすぎて見えん！";
+    } else {
+      setState(() {
+        ojiCo = "細かすぎて見えん！";
       });
     }
   }
@@ -175,73 +185,66 @@ class _ThirdPageState extends State<ThirdPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-
-          // Text(
-          //     resultVegetables.toString(),
-          //     style: Theme.of(context).textTheme.headlineMedium,
-          //   ),
-         Text(
-            'Total Score: $totalScore', // Display the total score here
+          Text(
+            'Total Score: $totalScore',
             style: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color:Colors.black,
-            
-              // ストロークの設定
+              color: Colors.black,
             ),
           ),
-          Row(children:[
+          Row(children: [
             Image.asset(
               'images/ojisan.png',
-              width:100,
-              height:100,
+              width: 100,
+              height: 100,
             ),
             SpeechBalloon(
               nipLocation: NipLocation.left,
               borderColor: Color.fromARGB(255, 86, 20, 40),
-              height: 70, // マルなので同じheightとwidth
+              height: 70,
               width: 300,
               borderRadius: 40,
-              offset: Offset(0, -1), // 棘の位置がずれてしまったのでoffsetで位置を修正してあげる
+              offset: Offset(0, -1),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     '$ojiCo',
-                    style: TextStyle(color: Color.fromARGB(255, 86, 20, 40),fontSize:18),
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 86, 20, 40),
+                      fontSize: 18,
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
           ]),
           if (totalScore == 100)
             Image.asset(
               'images/curry100.png',
-              width: 500, // 画像の幅を調整
-              height: 500, // 画像の高さを調整
+              width: 500,
+              height: 500,
             )
           else if (totalScore == 0)
             Image.asset(
               'images/curry0.png',
-              width: 500, // 画像の幅を調整
-              height: 500, // 画像の高さを調整
+              width: 500,
+              height: 500,
             )
           else
             Image.asset(
               'images/curry${reI[0]}${reI[1]}${reI[2]}${reI[3]}.png',
-              width: 500, // 画像の幅を調整
-              height: 500, // 画像の高さを調整
+              width: 500,
+              height: 500,
             ),
-
           Text(
             _userAccelerometerValues,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
-
-          // 戻るボタン
           SizedBox(
-            width: 250, // ボタンの幅を指定
+            width: 250,
             height: 80,
             child: ElevatedButton(
               onPressed: () {
@@ -258,26 +261,8 @@ class _ThirdPageState extends State<ThirdPage> {
               ),
             ),
           ),
-          // ElevatedButton(
-          //     onPressed: toresult(),
-          // ),
-
-          // if (_result)
-          // // 半透明の暗幕
-          // ModalBarrier(
-          //   // ignore: deprecated_member_use
-          //   color: Colors.black.withOpacity(0.5), // 黒色で透明度50%
-          //   dismissible: false, // タップで閉じないようにする
-          // ),
-          // 3. リザルト画面
-          // if (_result)
-          // Center(
-          //   child: ResultScreen(),
-          // ),
         ],
       ),
     );
   }
-
-  
 }
