@@ -21,6 +21,7 @@ class _ThirdPageState extends State<ThirdPage> {
   late final List<int> resultVegetables;
   late final List<int> reI;
   String ojiCo = "";
+  
 
   @override
   void initState() {
@@ -178,6 +179,7 @@ class _ThirdPageState extends State<ThirdPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -210,7 +212,7 @@ class _ThirdPageState extends State<ThirdPage> {
                     nipLocation: NipLocation.left,
                     borderColor: Color.fromARGB(255, 86, 20, 40),
                     height: 70,
-                    width: 280,
+                    width: screenWidth * 0.7, // 画面幅の80%
                     borderRadius: 40,
                     offset: Offset(0, -1),
                     child: Row(
