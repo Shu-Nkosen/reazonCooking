@@ -122,6 +122,16 @@ class _ThirdPageState extends State<ThirdPage> {
         ojiCo="これは料理ではない。毒じゃぜ。";
       });
     }
+    else if(widget.curryVegetables.every((element) => element == 7)){
+      setState((){
+        ojiCo="これは!!伝説のカレーじゃ!!!";
+      });
+    }
+    else if(widget.curryVegetables.every((element) => element >= 50)){
+      setState((){
+        ojiCo="なんと!?\nシチューが出来上がったぞ!!";
+      });
+    }
     else if(reI[0]+reI[1]+reI[2]+reI[3]==3){
       setState((){
         ojiCo="大胆な料理じゃ!具材が大きいのう";
@@ -223,6 +233,18 @@ class _ThirdPageState extends State<ThirdPage> {
           else if (totalScore == 0)
             Image.asset(
               'images/curry0.png',
+              width: 500, // 画像の幅を調整
+              height: 500, // 画像の高さを調整
+            )
+          else if(widget.curryVegetables.every((element) => element == 7))
+            Image.asset(
+              'images/curry777.png',
+              width: 500, // 画像の幅を調整
+              height: 500, // 画像の高さを調整
+            )
+          else if(widget.curryVegetables.every((element) => element >= 50))
+            Image.asset(
+              'images/stew.png',
               width: 500, // 画像の幅を調整
               height: 500, // 画像の高さを調整
             )
