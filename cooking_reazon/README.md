@@ -1,11 +1,14 @@
 # cooking_reazon
 
-A new Flutter project.
+2025/08/29
 
 これはflutterでお料理アプリを作るA班のプロジェクトです。
 
 ジャイロのインストール
 flutter pub add sensors_plus
+
+その他pubsepec.yaml内のインストール
+flutter pub get
 
 
 ---github作業の進め方---
