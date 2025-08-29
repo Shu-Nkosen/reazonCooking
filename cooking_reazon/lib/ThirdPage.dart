@@ -211,7 +211,7 @@ class _ThirdPageState extends State<ThirdPage> {
               nipLocation: NipLocation.left,
               borderColor: Color.fromARGB(255, 86, 20, 40),
               height: 70,
-              width: 300,
+              width: 280,
               borderRadius: 40,
               offset: Offset(0, -1),
               child: Row(
