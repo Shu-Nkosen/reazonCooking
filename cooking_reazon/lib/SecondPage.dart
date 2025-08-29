@@ -6,7 +6,7 @@ import 'NiruPage.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
-import 'package:vibration/vibration.dart'; // Vibrationパッケージをインポート
+import 'package:vibration/vibration.dart';
 
 class NextPage extends StatefulWidget {
   const NextPage({super.key});
@@ -19,7 +19,7 @@ class _NextPageState extends State<NextPage> {
   // StreamSubscriptionのインスタンスを保持する変数
   StreamSubscription<UserAccelerometerEvent>? _accelerometerSubscription;
   late Timer _timer;
-  late Timer _countdownTimer; // 1秒ごとに更新するタイマーを追加
+  late Timer _countdownTimer;
   final int cookTime = 20;
   int _userCutCount = 0;
   int _userCutState = 1;
@@ -55,11 +55,11 @@ class _NextPageState extends State<NextPage> {
             Text(
               "振ってカット！！",
               style: TextStyle(
-                fontSize: 30, // ここに好きなサイズを数値で指定
+                fontSize: 30,
               ),
             ),
             Text(
-              "残り$_remainingSeconds秒", // 残り秒数を表示するTextウィジェットを追加
+              "残り$_remainingSeconds秒",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -73,27 +73,25 @@ class _NextPageState extends State<NextPage> {
             Text(
               "${_userCutCount.toString()}回！",
               style: TextStyle(
-                fontSize: 30, // ここに好きなサイズを数値で指定
+                fontSize: 30,
               ),
             ),
             Center(
               child: _currentVegetable == 3
                   ? SizedBox(
-                      width: 250, // ボタンの幅を指定
+                      width: 250,
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
                           _handleNextVegetable();
                           _bgmPlayer.stop();
-                          // ここでオーバレイを削除
                           _overlayEntry?.remove();
                           _overlayEntry = null;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => NiruPage(
-                                // ここでcurryVegetablesリストを渡す
-                                curryVegetables:curryVegetables,
+                                curryVegetables: curryVegetables,
                               ),
                             ),
                           );
@@ -131,11 +129,11 @@ class _NextPageState extends State<NextPage> {
                       ),
                     )
                   : SizedBox(
-                      width: 250, // ボタンの幅を指定
+                      width: 250,
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          _handleNextVegetable(); // 共通のメソッドを呼び出す
+                          _handleNextVegetable();
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
@@ -173,7 +171,7 @@ class _NextPageState extends State<NextPage> {
 
             // 戻るボタン
             SizedBox(
-              width: 250, // ボタンの幅を指定
+              width: 250,
               height: 80,
               child: ElevatedButton(
                 onPressed: () {
@@ -236,7 +234,6 @@ class _NextPageState extends State<NextPage> {
 
     _startTimers(); // タイマーを開始
 
-    // リスナーを_accelerometerSubscriptionに格納
     _accelerometerSubscription = userAccelerometerEvents.listen((
       UserAccelerometerEvent event,
     ) {
@@ -253,11 +250,9 @@ class _NextPageState extends State<NextPage> {
   }
 
   void _startTimers() {
-    // 既存のタイマーがあればキャンセル
     if (_timer.isActive) _timer.cancel();
     if (_countdownTimer.isActive) _countdownTimer.cancel();
 
-    // setStateで秒数をリセットし、UIを即座に更新する
     setState(() {
       _remainingSeconds = cookTime;
     });
@@ -267,7 +262,6 @@ class _NextPageState extends State<NextPage> {
         _handleNextVegetable();
       });
 
-      // 1秒ごとにカウントダウンを更新するタイマー
       _countdownTimer = Timer.periodic(const Duration(seconds: 1), (
         timer,
       ) async {
@@ -275,7 +269,7 @@ class _NextPageState extends State<NextPage> {
           setState(() {
             _remainingSeconds--;
           });
-          // 1秒になったときにバイブレーションをトリガー
+          // 1秒になったときにバイブレーション
           if (_remainingSeconds == 1) {
             if (await Vibration.hasVibrator()) {
               Vibration.vibrate(duration: 500);
@@ -288,7 +282,6 @@ class _NextPageState extends State<NextPage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => NiruPage(
-                      // ここでcurryVegetablesリストを渡す
                       curryVegetables: curryVegetables,
                     ),
                   ),
@@ -314,7 +307,7 @@ class _NextPageState extends State<NextPage> {
       _currentVegetable += 1;
       _userCutCount = 0;
     });
-    _startTimers(); // 次の野菜に切り替わったら両方のタイマーをリセット
+    _startTimers();
   }
 
   void _playCutSound() async {
@@ -346,7 +339,7 @@ class _NextPageState extends State<NextPage> {
     _overlayEntry?.remove();
     _overlayEntry = null;
     _timer.cancel();
-    _countdownTimer.cancel(); // カウントダウンタイマーもキャンセル
+    _countdownTimer.cancel();
     _cutSoundPlayer.dispose();
     _bgmPlayer.dispose();
     super.dispose();
