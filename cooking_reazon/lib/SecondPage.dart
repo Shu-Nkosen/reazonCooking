@@ -93,7 +93,7 @@ class _NextPageState extends State<NextPage> {
                             MaterialPageRoute(
                               builder: (context) => NiruPage(
                                 // ここでcurryVegetablesリストを渡す
-                                curryVegetables: curryVegetables,
+                                curryVegetables:curryVegetables,
                               ),
                             ),
                           );
