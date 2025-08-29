@@ -140,7 +140,7 @@ class _ThirdPageState extends State<ThirdPage> {
       });
     } else if (widget.curryVegetables.every((element) => element == 7)) {
       setState(() {
-        ojiCo = "これは!!伝説のカレーじゃ!!!";
+        ojiCo = "これは!!\n伝説のカレーじゃ!!!";
       });
     } else if (widget.curryVegetables.every((element) => element >= 50)) {
       setState(() {
@@ -148,27 +148,27 @@ class _ThirdPageState extends State<ThirdPage> {
       });
     } else if (reI[0] + reI[1] + reI[2] + reI[3] == 3) {
       setState(() {
-        ojiCo = "大胆な料理じゃ!具材が大きいのう";
+        ojiCo = "大胆な料理じゃ!\n具材が大きいのう";
       });
     } else if (reI[0] + reI[1] + reI[2] + reI[3] == 2) {
       setState(() {
-        ojiCo = "ダイナミックとミニマムが混ざり合っておる!";
+        ojiCo = "ダイナミックとミニマムが\n混ざり合っておる!";
       });
     } else if (reI[0] == 1) {
       setState(() {
-        ojiCo = "じゃがいもがそのままじゃ！主張が強いのう…";
+        ojiCo = "じゃがいもがそのままじゃ！\n主張が強いのう…";
       });
     } else if (reI[1] == 1) {
       setState(() {
-        ojiCo = "にんじんがそのままじゃ！主張が強いのう…";
+        ojiCo = "にんじんがそのままじゃ！\n主張が強いのう…";
       });
     } else if (reI[2] == 1) {
       setState(() {
-        ojiCo = "玉ねぎがそのままじゃ！主張が強いのう…";
+        ojiCo = "玉ねぎがそのままじゃ！\n主張が強いのう…";
       });
     } else if (reI[3] == 1) {
       setState(() {
-        ojiCo = "肉がそのままじゃ!野蛮じゃのう…";
+        ojiCo = "肉がそのままじゃ!\n野蛮じゃのう…";
       });
     } else {
       setState(() {
@@ -242,7 +242,7 @@ class _ThirdPageState extends State<ThirdPage> {
             )
           else if (widget.curryVegetables.every((element) => element == 7))
             Image.asset(
-              'images/curry777.png',
+              'images/curry7777.png',
               width: 500, // 画像の幅を調整
               height: 500, // 画像の高さを調整
             )
