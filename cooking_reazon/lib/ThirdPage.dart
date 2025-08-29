@@ -129,27 +129,27 @@ class _ThirdPageState extends State<ThirdPage> {
     }
     else if(reI[0]+reI[1]+reI[2]+reI[3]==2){
       setState((){
-        ojiCo="ダイナミックとミニマムが混ざり合っておる!";
+        ojiCo="ダイナミックとミニマムが\n混ざり合っておる!";
       });
     }
     else if(reI[0]==1){
       setState((){
-        ojiCo="じゃがいもがそのままじゃ！主張が強いのう…";
+        ojiCo="じゃがいもがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[1]==1){
       setState((){
-        ojiCo="にんじんがそのままじゃ！主張が強いのう…";
+        ojiCo="にんじんがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[2]==1){
       setState((){
-        ojiCo="玉ねぎがそのままじゃ！主張が強いのう…";
+        ojiCo="玉ねぎがそのままじゃ！\n主張が強いのう…";
       });
     }
     else if(reI[3]==1){
       setState((){
-        ojiCo="肉がそのままじゃ!野蛮じゃのう…";
+        ojiCo="肉がそのままじゃ!\n野蛮じゃのう…";
       });
     }
     else{
@@ -238,26 +238,41 @@ class _ThirdPageState extends State<ThirdPage> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(_gyroscopeValues, style: Theme.of(context).textTheme.titleLarge),
-
-          // 戻るボタン
-          SizedBox(
-            width: 250, // ボタンの幅を指定
-            height: 80,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
+            // 戻るボタン
+            SizedBox(
+              width: 250, // ボタンの幅を指定
+              height: 80,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.popUntil(context, (route) => route.isFirst);
               },
-              child: Center(
-                child: const Text(
-                  'ホームに戻る',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Color.fromARGB(255, 75, 196, 91),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Colors.orange[300]!,
+                        Colors.orange[500]!,
+                        Colors.orange[700]!,
+                      ],
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'ホームに戻る',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
           // ElevatedButton(
           //     onPressed: toresult(),
           // ),
