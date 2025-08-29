@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:speech_balloon/speech_balloon.dart';
-import 'package:audioplayers/audioplayers.dart'; // audioplayersをインポート
+import 'package:audioplayers/audioplayers.dart';
 
 class ThirdPage extends StatefulWidget {
   final List<int> curryVegetables;
@@ -16,8 +15,8 @@ class _ThirdPageState extends State<ThirdPage> {
   // AudioPlayerのインスタンスを作成
   late AudioPlayer _audioPlayer;
 
-  String _userAccelerometerValues = "";
-  String _gyroscopeValues = "";
+  final String _userAccelerometerValues = "";
+  final String _gyroscopeValues = "";
   late int totalScore;
   late final List<int> resultVegetables;
   late final List<int> reI;

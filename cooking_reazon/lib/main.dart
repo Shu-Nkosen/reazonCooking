@@ -25,7 +25,6 @@ class MainApp extends StatelessWidget {
   }
 }
 
-//1枚目のページ
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -70,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   // 隙間
                   const SizedBox(height: 200),
+
                   // Start! ボタン
                   ElevatedButton(
                     onPressed: () {
@@ -106,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   // 隙間
                   const SizedBox(height: 100),
 
+                  // 作り方
                   Container(
-                    // ここで横幅を画面幅の90%に設定 👇
                     width: MediaQuery.of(context).size.width * 0.9,
                     margin: const EdgeInsets.all(12),
                     padding: const EdgeInsets.only(top: 30, bottom: 30),
@@ -132,7 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Column(
                         children: [
                           const SizedBox(height: 2, width: 100),
-                          // タイトル
                           Text(
                             'カレーの作り方',
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -141,7 +140,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          // 説明文
                           Text(
                             '1.スマホを振って具材を切ります。\n2.具材はジャガイモ・人参・玉葱・牛肉です。\n3.具材を切る制限時間は１種類30秒です。\n4.切り具合でスコアが決まります。\n5.100点のカレーを目指して頑張ろう！',
                             style: TextStyle(
